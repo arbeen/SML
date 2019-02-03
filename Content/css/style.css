@@ -1,0 +1,190 @@
+body {
+    background: #343d46;
+}
+
+#aboutBody,
+#contactBody,
+#profileBody,
+#myLyricsBody {
+    margin-top: 100px;
+}
+
+.header-part {
+    margin: 100px auto 50px auto;
+}
+
+.header-part h1,
+#myLyricsBody h1,
+#profileBody h1 {
+    text-align: center;
+    font-size: 100px;
+    font-family: 'Abel', sans-serif;
+    color: white;
+    font-weight: lighter;
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+/Edge */
+    user-select: none;
+    /* Standard */
+}
+
+
+.box {
+    margin: auto;
+    width: 100%;
+    height: 30px;
+}
+
+.container-1 {
+    vertical-align: middle;
+    white-space: nowrap;
+    position: relative;
+}
+
+.container-1 input#searchInput {
+    width: 100%;
+    height: 50px;
+    background: #2b303b;
+    border: none;
+    font-size: 10pt;
+    float: left;
+    color: #63717f;
+    padding-left: 45px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-transition: background .55s ease;
+    -moz-transition: background .55s ease;
+    -ms-transition: background .55s ease;
+    -o-transition: background .55s ease;
+    transition: background .55s ease;
+}
+
+.container-1 input#searchInput::-webkit-input-placeholder {
+    color: #65737e;
+}
+
+.container-1 input#searchInput:-moz-placeholder {
+    /* Firefox 18- */
+    color: #65737e;
+}
+
+.container-1 input#searchInput::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #65737e;
+}
+
+.container-1 input#searchInput:-ms-input-placeholder {
+    color: #65737e;
+}
+
+.container-1 input#searchInput:hover,
+.container-1 input#searchInput:focus,
+.container-1 input#searchInput:active {
+    outline: none;
+    background: #ffffff;
+}
+
+.container-1 button.search-icon {
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-bottomright: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    border: none;
+    background: #232833;
+    height: 50px;
+    width: 50px;
+    color: #4f5b66;
+    opacity: 0;
+    font-size: 10pt;
+
+    -webkit-transition: all .55s ease;
+    -moz-transition: all .55s ease;
+    -ms-transition: all .55s ease;
+    -o-transition: all .55s ease;
+    transition: all .55s ease;
+}
+
+.container-1:hover button.search-icon,
+.container-1:active button.search-icon,
+.container-1:focus button.search-icon {
+    outline: none;
+    opacity: 1;
+    margin-left: -50px;
+}
+
+.container-1:hover button.search-icon:hover {
+    background: white;
+}
+
+/*managetable overflow*/
+#songTable {
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+}
+
+#songTable td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Column widths are based on these cells */
+.songIdRow {
+    width: 10%;
+}
+
+.songNameRow {
+    width: 15%;
+}
+
+.artistRow {
+    width: 15%;
+}
+
+.songLyricsRow {
+    width: 30%;
+}
+
+.addedByRow {
+    width: 15%;
+}
+
+.actionRow {
+    width: 15%;
+}
+
+.changeLyricsTable .songIdRow {
+    width: 10%
+}
+
+.changeLyricsTable .songNameRow {
+    width: 15%
+}
+
+.changeLyricsTable .artistRow {
+    width: 15%
+}
+
+.changeLyricsTable .songLyricsRow {
+    width: 20%
+}
+
+.changeLyricsTable .addedByRow {
+    width: 15%
+}
+
+.changeLyricsTable .actionRow {
+    width: 25%
+}
+
+.modal { 
+   background-color: #222 !important; 
+}
