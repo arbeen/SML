@@ -137,6 +137,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BigViewModel.cs" />
     <Compile Include="Models\Extended\SongTable.cs" />
     <Compile Include="Models\Extended\UserTable.cs" />
     <Compile Include="Models\SMLModel.Context.cs">

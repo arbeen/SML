@@ -26,12 +26,12 @@ namespace SML.Controllers
     //For User Registration
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Register(UserTable obj)
+    public ActionResult Register(BigViewModel obj)
     {
       if (ModelState.IsValid)
       {
         SMLDBEntities db = new SMLDBEntities();
-        db.UserTables.Add(obj);
+        db.UserTables.Add(obj.UserTable);
         db.SaveChanges();
       }
       return RedirectToAction("Index");
@@ -40,13 +40,13 @@ namespace SML.Controllers
 
     //For User Login
     [HttpPost]
-    public ActionResult Login(UserTable objUser)
+    public ActionResult Login(BigViewModel objUser)
     {
       if (ModelState.IsValid)
       {
         using (SMLDBEntities db = new SMLDBEntities())
         {
-          var obj = db.UserTables.Where(a => a.UserName.Equals(objUser.UserName) && a.Password.Equals(objUser.Password)).FirstOrDefault();
+          var obj = db.UserTables.Where(a => a.UserName.Equals(objUser.UserTable.UserName) && a.Password.Equals(objUser.UserTable.Password)).FirstOrDefault();
           if (obj != null)
           {
             Session["UserID"] = obj.UserID.ToString();
@@ -56,7 +56,7 @@ namespace SML.Controllers
           }
         }
       }
-      return View(objUser);
+      return RedirectToAction("Index");
     }
 
     public ActionResult UserDashboard()
