@@ -1,256 +1,100 @@
-﻿@model SML.Models.UserTable
-
-@{
-  Layout = null;
+﻿@{
+  ViewBag.Title = "Home";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-  <meta name="viewport" content="width=device-width" />
-  <title>SearchMyLyrics</title>
-  <link rel="icon" type="images/png" href="../../Content/images/favicon.png">
-  <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="../../Content/css/bootstrap-lux.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="../../Content/css/style.css">
-</head>
-<body>
-
-    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-      <div class="container">
-        <a href="#" class="navbar-brand">SearchMyLyrics</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <!-- Left elements on navbar -->
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="home">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="about">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="contact">Contact</a>
-            </li>
-          </ul>
-          <!-- Right elements on navbar -->
-          <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="modal" href="#loginModal">Log In</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="modal" href="#registerModal">Register</a>
-            </li>
-          </ul>
+<div class="container">
+  <div id="homeBody">
+    <div class="header-part">
+      <!-- header -->
+      <h1>search the song</h1>
+      <!-- Search Box -->
+      <div class="box">
+        <div class="container-1">
+          <input type="search" id="searchInput" onkeyup="search()" placeholder="Enter the song name here..." />
+          <button class="search-icon"><i class="fas fa-search"></i></button>
         </div>
-        <!-- Login Modal -->
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" data-backdrop="false">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Log In</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              @using (Html.BeginForm("Login", "Home", FormMethod.Post))
-              {
-
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
-
-                <div class="modal-body">
-                  @if (@ViewBag.Message != null)
-                  {
-                    <div style="border: 1px solid red">
-                      @ViewBag.Message
-                    </div>
-                  }
-                  <div class="form-group">
-
-                    @Html.LabelFor(a => a.UserName)
-                    @Html.TextBoxFor(a => a.UserName, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(a => a.UserName)
-                  </div>
-                  <div class="form-group">
-
-                    @Html.LabelFor(a => a.Password)
-                    @Html.TextBoxFor(a => a.Password, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(a => a.Password)
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                  <input type="submit" value="Log In" class="btn btn-primary" />
-
-                </div>
-              }
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-
-
-          <!-- Register Modal -->
-          <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" data-backdrop="false">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Register</h5>
-                  <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-
-                @using (Html.BeginForm("Register", "Home", FormMethod.Post))
-                {
-                  @Html.AntiForgeryToken()
-                <div class="modal-body">
-                  <div class="form-group">
-                    @Html.LabelFor(model => model.UserName)
-                    @Html.TextBoxFor(model => model.UserName, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-
-                  </div>
-
-                  <div class="form-group">
-                    @Html.LabelFor(model => model.Email)
-
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-
-                  </div>
-
-                  <div class="form-group">
-                    @Html.LabelFor(model => model.Password)
-
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-
-                  </div>
-                </div>
-                  <div class="form-group modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                      <input type="submit" value="Create" class="btn btn-primary" />
-
-                    
-                  </div>
-                }
-                </div>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="container">
-      <div id="homeBody">
-        <div class="header-part">
-          <!-- header -->
-          <h1>search the song</h1>
-          <!-- Search Box -->
-          <div class="box">
-            <div class="container-1">
-              <input type="search" id="searchInput" onkeyup="search()" placeholder="Enter the song name here..." />
-              <button class="search-icon"><i class="fas fa-search"></i></button>
-            </div>
-          </div>
-        </div>
-        <!-- Lyrics Table -->
-        <table class="table table-striped table-sm" id="songTable">
-          <thead>
-            <tr class="table-active">
-              <th scope="col" class="songIdRow">Song ID</th>
-              <th scope="col" class="songNameRow">Song Name</th>
-              <th scope="col" class="artistRow">Artist</th>
-              <th scope="col" class="songLyricsRow">Song Lyrics</th>
-              <th scope="col" class="addedByRow">Added By</th>
-              <th scope="col" class="actionRow">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th id="tableSongId">123</th>
-              <td id="tableSongName">Despacito</td>
-              <td id="tableArtist">Spanish manxe</td>
-              <td id="tableSongLyrics">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostr
-                ud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </td>
-              <td id="tableAddedBy">arbin</td>
-              <td><button type="button" id="tableDetails" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lyricsDetailModal">Details</button></td>
-            </tr>
-            <tr>
-              <th>435</th>
-              <td>Man bina ko dhan</td>
-              <td>Ashok Darji</td>
-              <td>Casdfolasdfnt</td>
-              <td>susan</td>
-              <td><button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lyricsDetailModal">Details</button></td>
-            </tr>
-            <tr>
-              <th>3245</th>
-              <td>Without you</td>
-              <td>Oh Wonder</td>
-              <td>Casdfasdfdfdddsent</td>
-              <td>arbin</td>
-              <td><button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lyricsDetailModal">Details</button></td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- Lyrics detail Modal -->
-        <div class="modal fade" id="lyricsDetailModal" tabindex="-1" role="dialog" data-backdrop="false">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <div class="modal-title">
-                  <h5 id="songName"></h5>
-                  <small id="artist"></small>
-                </div>
-                <button type="button" class="close" data-dismiss="modal">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <p id="songLyrics"></p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="aboutBody">
-        <h1 class="display-4">We Are Here To Give You Lyrics</h1>
-        Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores veritatis et quasi architecto beatae vitae dicta sunt etras sits eos qui.
-        Ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla.
-      </div>
-      <div id="contactBody">
-        <h1 class="display-4">Get In Touch</h1>
-        onsequuntur magni dolores veritatis et quasi architecto beatae vitae dicta sunt etras sits eos qui. Ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla.
-        Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia c
       </div>
     </div>
-  
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="../../Content/js/script.js"></script>
-
-</body>
-</html>
+    <!-- Lyrics Table -->
+    <table class="table table-striped table-sm" id="songTable">
+      <thead>
+        <tr class="table-active">
+          <th scope="col" class="songIdRow">Song ID</th>
+          <th scope="col" class="songNameRow">Song Name</th>
+          <th scope="col" class="artistRow">Artist</th>
+          <th scope="col" class="songLyricsRow">Song Lyrics</th>
+          <th scope="col" class="addedByRow">Added By</th>
+          <th scope="col" class="actionRow">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="tableSongId">123</th>
+          <td id="tableSongName">Despacito</td>
+          <td id="tableArtist">Spanish manxe</td>
+          <td id="tableSongLyrics">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostr
+            ud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </td>
+          <td id="tableAddedBy">arbin</td>
+          <td><button type="button" id="tableDetails" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lyricsDetailModal">Details</button></td>
+        </tr>
+        <tr>
+          <th>435</th>
+          <td>Man bina ko dhan</td>
+          <td>Ashok Darji</td>
+          <td>Casdfolasdfnt</td>
+          <td>susan</td>
+          <td><button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lyricsDetailModal">Details</button></td>
+        </tr>
+        <tr>
+          <th>3245</th>
+          <td>Without you</td>
+          <td>Oh Wonder</td>
+          <td>Casdfasdfdfdddsent</td>
+          <td>arbin</td>
+          <td><button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lyricsDetailModal">Details</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Lyrics detail Modal -->
+    <div class="modal fade" id="lyricsDetailModal" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="modal-title">
+              <h5 id="songName"></h5>
+              <small id="artist"></small>
+            </div>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="songLyrics"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="aboutBody">
+    <h1 class="display-4">We Are Here To Give You Lyrics</h1>
+    Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores veritatis et quasi architecto beatae vitae dicta sunt etras sits eos qui.
+    Ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla.
+  </div>
+  <div id="contactBody">
+    <h1 class="display-4">Get In Touch</h1>
+    onsequuntur magni dolores veritatis et quasi architecto beatae vitae dicta sunt etras sits eos qui. Ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla.
+    Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia c
+  </div>
+</div>

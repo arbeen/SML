@@ -1,42 +1,240 @@
-﻿<!DOCTYPE html>
+﻿@model SML.Models.BigViewModel
+
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css/css")
-    @Scripts.Render("~/bundles/modernizr")
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SearchMyLyrics - @ViewBag.Title</title>
+
+  <link rel="icon" type="images/png" href="../../Content/images/favicon.png">
+  <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../../Content/css/bootstrap-lux.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="../../Content/css/style.css">
+
+  <script src="../../Content/js/Jquery.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
+
+  @if (Session["UserID"] == null)
+  {
+    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+      <div class="container">
+        <a href="#" class="navbar-brand">SearchMyLyrics</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <!-- Left elements on navbar -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="about">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="contact">Contact</a>
+            </li>
+          </ul>
+          <!-- Right elements on navbar -->
+          <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="modal" href="#loginModal">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="modal" href="#registerModal">Register</a>
+            </li>
+          </ul>
         </div>
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" data-backdrop="false">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Log In</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+              {
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <div class="modal-body">
+                  @if (@ViewBag.Message != null)
+                  {
+                    <div style="border: 1px solid red">
+                      @ViewBag.Message
+                    </div>
+                  }
+                  <div class="form-group">
+
+                    @Html.LabelFor(a => a.UserTable.UserName)
+                    @Html.TextBoxFor(a => a.UserTable.UserName, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(a => a.UserTable.UserName)
+                  </div>
+                  <div class="form-group">
+                    @Html.LabelFor(a => a.UserTable.Password)
+                    @Html.TextBoxFor(a => a.UserTable.Password, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(a => a.UserTable.Password)
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                  <input type="submit" value="Log In" class="btn btn-primary" />
+
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Register Modal -->
+        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" data-backdrop="false">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Register</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              @using (Html.BeginForm("Register", "Home", FormMethod.Post))
+              {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                  <div class="form-group">
+                    @Html.LabelFor(model => model.UserTable.UserName)
+                    @Html.TextBoxFor(model => model.UserTable.UserName, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UserTable.UserName, "", new { @class = "text-danger" })
+
+                  </div>
+
+                  <div class="form-group">
+                    @Html.LabelFor(model => model.UserTable.Email)
+
+                    @Html.EditorFor(model => model.UserTable.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserTable.Email, "", new { @class = "text-danger" })
+
+                  </div>
+                  <div class="form-group">
+                    @Html.LabelFor(model => model.UserTable.Password)
+                    @Html.EditorFor(model => model.UserTable.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserTable.Password, "", new { @class = "text-danger" })
+
+                  </div>
+                </div>
+                <div class="form-group modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+  }
+  else
+  {
+    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+      <div class="container">
+        <a href="#" class="navbar-brand">SearchMyLyrics</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <!-- Left elements on navbar -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="userHome">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="profile">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="myLyrics">My Lyrics</a>
+            </li>
+          </ul>
+          <!-- Right elements on navbar -->
+          <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#addLyricsModal" data-toggle="modal" data-backdrop="false">Add new lyrics</a>
+            </li>
+            <li class="nav-item">
+              @Html.ActionLink("Logout", "Logout", "Home", new { @class = "nav-link" })
+            </li>
+          </ul>
+        </div>
+        <!-- add lyrics Modal -->
+        <div class="modal fade" id="addLyricsModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enter the Lyrics</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group row">
+                  <label for="staticAddedBy" class="col-sm-2 col-form-label">Added By:</label>
+                  <div class="col-sm-10">
+                    <input type="text" readonly="" class="form-control-plaintext" id="staticAddedBy" value="arbin">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="songName">Song Name</label>
+                  <input type="text" class="form-control" id="songName" placeholder="Enter the name of the song">
+                  <small class="form-text text-muted">Please donot repost songs.</small>
+                </div>
+                <div class="form-group">
+                  <label for="songArtist">Artist</label>
+                  <input type="text" class="form-control" id="songArtist" placeholder="Enter the name of the artist">
+                </div>
+                <div class="form-group">
+                  <label for="lyrics">Lyrics</label>
+                  <textarea class="form-control" id="lyrics" rows="8"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+  }
+
+
+
+  <div class="container body-content">
+    @RenderBody()
+    <hr />
+
+
+    <footer>
+      <p>&copy; @DateTime.Now.Year - SearchMyLyrics</p>
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="../../Content/js/script.js"></script>
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 </body>
 </html>

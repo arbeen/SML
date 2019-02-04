@@ -47,7 +47,6 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function () {
 function search() {
     // Declare variables 
     var input, filter, table, tr, td, i;
@@ -68,10 +67,9 @@ function search() {
         }
     }
 }
-
 // for song lyrics details from table
 
-$('#lyricsDetailModal').on('show.bs.modal', function(e) {
+$('#lyricsDetailModal, #myLyricsDetailModal').on('show.bs.modal', function(e) {
 
     var _button = $(e.relatedTarget);
 
@@ -117,4 +115,3 @@ $('#lyricsDeleteModal').on('show.bs.modal', function(e) {
 
     $(this).find(".modal-title").html("Do you really want to delete " + _songName + "?");
   });
-});
