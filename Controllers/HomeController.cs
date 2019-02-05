@@ -15,7 +15,7 @@ namespace SML.Controllers
     {
       if (Session["UserID"] != null)
       {
-        return RedirectToAction("UserDashboard");
+        return RedirectToAction("Index", "User");
       }
       else
       {
@@ -52,31 +52,14 @@ namespace SML.Controllers
             Session["UserID"] = obj.UserID.ToString();
             Session["UserName"] = obj.UserName.ToString();
             Session["Email"] = obj.Email.ToString();
-            return RedirectToAction("UserDashboard");
+            return RedirectToAction("Index", "User");
           }
         }
       }
-      return RedirectToAction("Index");
-    }
-
-    public ActionResult UserDashboard()
-    {
-      if (Session["UserID"] != null)
-      {
-        return View();
-      }
-      else
-      {
-        return RedirectToAction("Index");
-      }
-    }
-
-
-    //For Logout
-    public ActionResult Logout()
-    {
-      Session.Abandon();
       return RedirectToAction("Index", "Home");
     }
+
+
+
   }
 }
