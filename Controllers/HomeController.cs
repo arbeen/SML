@@ -10,7 +10,7 @@ namespace SML.Controllers
 {
   public class HomeController : Controller
   {
-
+    
     public ActionResult Index()
     {
       if (Session["UserID"] != null)
@@ -19,7 +19,11 @@ namespace SML.Controllers
       }
       else
       {
-         return View();
+        SMLDBEntities songs = new SMLDBEntities();
+        BigViewModel bvm = new BigViewModel();
+        bvm.SongTable = new List<SongTable>();
+        bvm.SongTable = songs.SongTables.ToList();
+        return View(bvm);
       }
     }
 

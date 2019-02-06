@@ -8,7 +8,7 @@ namespace SML.Models
   public class BigViewModel
   {
     public UserTable UserTable { get; set; }
-    public SongTable SongTable { get; set; }
+    public List<SongTable> SongTable { get; set; }
 
   }
 }
